@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        function updateTowns() {
+            const eskualdea = document.getElementById("Eskualdea").value;
+            const herriakSelect = document.getElementById("Herriak");
+
+            
+
+            if (!eskualdea) {
+                herriakSelect.disabled = true;
+                return;
+            }
+
+            fetch("lortuHerriak.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: `eskualdea=${eskualdea}`,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    herriakSelect.disabled = false;
+
+                    if (data.error) {
+                        alert(data.error); 
+                        return;
+                    }
+
+                    data.forEach(town => {
+                        const option = document.createElement("option");
+                        option.value = town;
+                        option.textContent = town;
+                        herriakSelect.appendChild(option);
+                    });
+                })
+                .catch(error => alert("Ezin dira erriak kargatu " + error));
+        }
+    </script>
+</head>
+<body>
+    <!--Formularioa-->
+    <form>
+        <label for="Eskualdea"></label>
+        <select id="Eskualdea" name="Eskualdea" onchange="updateTowns()">
+            <option value=""></option>
+            <option value="Goierri">Goierri</option>
+            <option value="Donostialdea">Donostialdea</option>
+            <option value="Urola">Urola</option>
+            <option value="Iruña">Iruña</option>
+        </select>
+
+        
+
+        <label for="Herriak"></label>
+        <select id="Herriak" name="Herriak" disabled>
+            <option value=""></option>
+        </select>
+    </form>
+</body>
+</html>
