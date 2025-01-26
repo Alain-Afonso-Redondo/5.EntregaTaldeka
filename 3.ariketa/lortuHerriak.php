@@ -3,7 +3,7 @@
 
 // Eskualde bakoitza array bat da, bakoitza dagozkion herriekin
 
-$zones = [
+$zonak = [
     "Goierri" => ["Altzaga", "Araga", "Ataun", "Beasain"],
     "Donostialdea" => ["Andoain", "Donostia", "Hernani", "Usurbil"],
     "Urola" => ["Azkoitia", "Azpeitia", "Loiola", "Zumaia"],
@@ -12,15 +12,15 @@ $zones = [
 
 //POST-a bidali bada ikusi
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $eskualdea = $_POST['eskualdea'] ?? "";
-
+    $eskualdea = $_POST['eskualdea'] ?? "";//Eskaera POST metodoa erabiltzen duen zihurtatzeko
+    //Eskualderik bidali ez den zihurtatzeko
     if (empty($eskualdea)) {
         echo json_encode(["error" => "Ez da eskualderik aurkitu."]);
         exit;
     }
 
-    if (array_key_exists($eskualdea, $zones)) {
-        echo json_encode($zones[$eskualdea]);
+    if (array_key_exists($eskualdea, $zonak)) {
+        echo json_encode($zonak[$eskualdea]);
     } 
     }
     exit;

@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
+        //Aukeratutako eskualdearen arabera herriak aldatzeko funtzioa
         function updateTowns() {
             const eskualdea = document.getElementById("Eskualdea").value;
             const herriakSelect = document.getElementById("Herriak");
 
             
-
+            //eskualderik aukeratzen ez bada ezingo da herririk aukeratu
             if (!eskualdea) {
                 herriakSelect.disabled = true;
                 return;
             }
-
+             //Zerbitzariari eskaera egiteko
             fetch("lortuHerriak.php", {
                 method: "POST",
                 headers: {
@@ -27,7 +28,7 @@
                     herriakSelect.disabled = false;
 
                     if (data.error) {
-                        alert(data.error); 
+                        alert(data.error); //zerbitzarian gertatu daitekeen edozein erroretaz abisatzeko
                         return;
                     }
 
